@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>LaTeX Snippet Generator</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+  <main>
+    <div id="top">
+      <div>
+        LaTeX Snippet Generator v1.0
+      </div>
+      <div>
+        <button onclick="exportSty()">Export Commands (.sty)</button>
+      </div>
+    </div>
+    <div id="split">
+      <div id="selections"></div>
+      <div id="info"></div>
+    </div>
+  </main>
+
+  <template id="selectionCheckbox">
+    <div class="selectionCheckbox">
+      <span>
+        &blacktriangleright;
+      </span>
+      <label>
+        <input type="checkbox" />
+        <span class="label">Text</span>
+      </label>
+    </div>
+  </template>
+
+  <template id="selectionTitle">
+    <div class="selectionTitle">
+      <span class="label">Title</span>
+      <span class="info">(1)</span>
+    </div>
+  </template>
+
+  <script src="./libs/FileSaver.min.js"></script>
+
+  <script src="./defs/commands.js"></script>
+  <script src="./defs/packages.js"></script>
+  <script src="./defs/prefs.js"></script>
+  <script src="./index.js"></script>
+</body>
+
+</html>

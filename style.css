@@ -1,0 +1,71 @@
+html {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+main {
+  position: absolute;
+  inset: 0;
+
+  display: flex;
+  flex-direction: column;
+}
+
+#top {
+  border-bottom: 1px solid gray;
+  padding: 3px;
+
+  display: flex;
+  flex: 0 0 0;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#top > div {
+  display: flex;
+  flex-direction: row;
+}
+
+#split {
+  display: flex;
+  flex: 1 0 0;
+  flex-direction: row;
+}
+
+#split > div {
+  padding: 10px;
+  flex: 1 0 0;
+  border-right: 1px solid grey;
+}
+
+#selections {
+  padding-top: 0 !important;
+}
+
+.selectionCheckbox {
+  display: flex;
+
+  padding: 1px;
+}
+
+.selectionCheckbox > label {
+  display: block;
+  flex: 1 0 0;
+}
+
+.selectionCheckbox > label > .label.disabled {
+  text-decoration: line-through;
+}
+
+.selectionCheckbox:hover {
+  background-color: #fffeb1;
+}
+
+.selectionTitle {
+  padding: 1px;
+  padding-top: 8px;
+}
+
+.selectionTitle > .info {
+  opacity: 0.5;
+}

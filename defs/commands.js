@@ -20,7 +20,7 @@ const COMMANDS = {
     ]
   },
   "cUnderline": {
-    title: "Make Underline",
+    title: "Make underline",
     description: "Underlines text.",
     defaultName: "U",
     defaultSelect: false,
@@ -30,7 +30,7 @@ const COMMANDS = {
     ]
   },
   "cMono": {
-    title: "Make Mono",
+    title: "Make mono",
     description: "Switches to the monospace font.",
     defaultName: "mono",
     defaultSelect: false,
@@ -40,7 +40,7 @@ const COMMANDS = {
     ]
   },
   "cN": {
-    title: `Insert Set of Natural Numbers "ℕ"`,
+    title: `Insert set of natural numbers "ℕ"`,
     description: "Inserts the ℕ symbol, used to represent the set of all natural numbers (typically {0, 1, 2, 3, ...} or {1, 2, 3, ...}, depending on convention).",
     defaultName: "NN",
     defaultSelect: true,
@@ -50,7 +50,7 @@ const COMMANDS = {
     ]
   },
   "cZ": {
-    title: `Insert Set of Integers "ℤ"`,
+    title: `Insert set of integers "ℤ"`,
     description: "Inserts the ℤ symbol, used to represent the set of all integers (..., -2, -1, 0, 1, 2, ...).",
     defaultName: "ZZ",
     defaultSelect: true,
@@ -60,7 +60,7 @@ const COMMANDS = {
     ]
   },
   "cQ": {
-    title: `Insert Set of Rational Numbers "ℚ"`,
+    title: `Insert set of rational numbers "ℚ"`,
     description: "Inserts the ℚ symbol, used to represent the set of all rational numbers (fractions of integers, where the denominator is nonzero).",
     defaultName: "QQ",
     defaultSelect: true,
@@ -70,7 +70,7 @@ const COMMANDS = {
     ]
   },
   "cC": {
-    title: `Insert Set of Complex Numbers "ℂ"`,
+    title: `Insert set of complex numbers "ℂ"`,
     description: "Inserts the ℂ symbol, used to represent the set of all complex numbers (numbers of the form a + bi, where i is the imaginary unit).",
     defaultName: "CC",
     defaultSelect: true,
@@ -80,7 +80,7 @@ const COMMANDS = {
     ]
   },
   "cR": {
-    title: `Insert Set of Real Numbers "ℝ"`,
+    title: `Insert set of real numbers "ℝ"`,
     description: "Inserts the ℝ symbol, used to represent a set of all of the real numbers.",
     defaultName: "RR",
     defaultSelect: true,
@@ -90,7 +90,7 @@ const COMMANDS = {
     ]
   },
   "cBraces": {
-    title: `Wrap in Auto-Sizing Braces "{x}"`,
+    title: `Wrap in auto-sizing braces "{x}"`,
     description: "Inserts a pair of auto-sizing braces around the argument.",
     defaultName: "q",
     defaultSelect: false,
@@ -100,7 +100,7 @@ const COMMANDS = {
     ]
   },
   "cParens": {
-    title: `Wrap in Auto-Sizing Parentheses "(x)"`,
+    title: `Wrap in auto-sizing parentheses "(x)"`,
     description: "Inserts a pair of auto-sizing parentheses around the argument.",
     defaultName: "p",
     defaultSelect: false,
@@ -110,7 +110,7 @@ const COMMANDS = {
     ]
   },
   "cBrackets": {
-    title: `Wrap in Auto-Sizing Brackets "[x]"`,
+    title: `Wrap in auto-sizing brackets "[x]"`,
     description: "Inserts a pair of auto-sizing square brackets around the argument.",
     defaultName: "s",
     defaultSelect: false,
@@ -120,7 +120,7 @@ const COMMANDS = {
     ]
   },
   "cAbs": {
-    title: `Wrap in Auto-Sizing Absolute Value "|x|"`,
+    title: `Wrap in auto-sizing absolute value "|x|"`,
     description: "Inserts a pair of auto-sizing absolute value bars around the argument.",
     defaultName: "abs",
     defaultSelect: true,
@@ -130,7 +130,7 @@ const COMMANDS = {
     ]
   },
   "cNorm": {
-    title: `Wrap in Auto-Sizing Normalize "||x||"`,
+    title: `Wrap in auto-sizing normalize "||x||"`,
     description: "Inserts a pair of auto-sizing normalize value bars (double vertical bars) around the argument.",
     defaultName: "norm",
     defaultSelect: true,

@@ -8,6 +8,9 @@ const PACKAGES = {
       "cBrackets",
       "cAbs",
       "cNorm",
+      "cTrOperator",
+      "cRankOperator",
+      "cErfOperator",
     ],
     prefReplacements: {
       "braces": "\\qty{@}",
@@ -15,6 +18,7 @@ const PACKAGES = {
       "brackets": "\\qty[@]",
       "abs": "\\qty|@|",
       "norm": "\\norm{@}",
-    }
+    },
+    definition: "\\usepackage{physics}"
   }
 }

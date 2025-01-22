@@ -130,13 +130,62 @@ function exportSty() {
   let packageSection = "";
   let commandSection = "";
 
+  let disabledCommands = [];
+  for (const selectionId in selectionState) {
+    if (selectionId in PACKAGES) {
+      const package = PACKAGES[selectionId];
+
+      packageSection += package.definition + "\n";
+
+      for (const cmd of package.disableCommands) {
+        disabledCommands.push(cmd);
+      }
+    }
+  }
+
   for (const selectionId in selectionState) {
     const selection = selectionState[selectionId];
 
     if (selectionId in COMMANDS) {
+      if (disabledCommands.indexOf(selectionId) != -1) {
+        continue;
+      }
+
       const command = COMMANDS[selectionId];
 
-      commandSection += `\\NewDocumentCommand{\\${selection.name}}${command.definition}\n`;
+      let parsedDef = "";
+      let atWord = "";
+      let atMode = false;
+      for (const c of command.definition) {
+        if (!atMode) {
+          if (c === "@") {
+            atMode = true;
+          } else {
+            parsedDef += c;
+          }
+        } else {
+          if (c === "@") {
+            atMode = false;
+
+            if (atWord === "_name") {
+              parsedDef += "\\" + selection.name;
+            } else {
+              console.warn("Unknown at. Inserting nothing.");
+            }
+
+            atWord = "";
+          } else {
+            atWord += c;
+          }
+        }
+      }
+
+      if (atMode) {
+        console.error("Unclosed at!");
+        continue;
+      }
+
+      commandSection += parsedDef + "\n";
     }
   }
 

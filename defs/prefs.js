@@ -1,55 +1,67 @@
 const PREFS = {
   "boldText": {
     value: "textbf",
-    type: "command",
+    type: "wrap"
   },
   "italicText": {
     value: "textit",
-    type: "command",
+    type: "wrap"
   },
   "underlineText": {
     value: "underline",
-    type: "command",
+    type: "wrap"
   },
   "monoText": {
     value: "texttt",
-    type: "command",
+    type: "wrap"
   },
   "naturals": {
     value: "\\mathbb{N}",
-    type: "insert",
+    type: "insert"
   },
   "integers": {
     value: "\\mathbb{Z}",
-    type: "insert",
+    type: "insert"
   },
   "rationals": {
     value: "\\mathbb{Q}",
-    type: "insert",
+    type: "insert"
   },
   "complex": {
     value: "\\mathbb{C}",
-    type: "insert",
+    type: "insert"
   },
   "reals": {
     value: "\\mathbb{R}",
-    type: "insert",
+    type: "insert"
   },
   "braces": {
     value: "\\left\\{@\\right}",
-    type: "wrap",
+    type: "wrap"
   },
   "parens": {
     value: "\\left(@\\right)",
-    type: "wrap",
+    type: "wrap"
   },
   "brackets": {
     value: "\\left[@\\right]",
-    type: "wrap",
+    type: "wrap"
   },
   "abs": {
-    values: "\\left|@\\right|",
-    type: "wrap",
+    value: "\\left|@\\right|",
+    type: "wrap"
+  },
+  "where": {
+    value: "\\;\\middle|\\;",
+    type: "insert"
+  },
+  "span": {
+    value: "\\operatorname{span}",
+    type: "insert"
+  },
+  "lcm": {
+    value: "\\operatorname{lcm}",
+    type: "insert"
   }
 };
 

@@ -13,6 +13,14 @@ function selectCommand(commandId, command) {
 function reset() {
   selectionState = {};
 
+  for (const packageId in PACKAGES) {
+    const package = PACKAGES[packageId];
+
+    if (package.defaultSelect) {
+      selectionState[packageId] = {};
+    }
+  }
+
   for (const commandId in COMMANDS) {
     const command = COMMANDS[commandId];
 
@@ -25,7 +33,23 @@ function reset() {
 function populateSelections() {
   selectionsParent.innerHTML = "";
 
+  const disabledPackages = [];
   const disabledCommands = [];
+
+  // Look at disabled packages and commands
+  for (const packageId in PACKAGES) {
+    if (packageId in selectionState && disabledPackages.indexOf(packageId) == -1) {
+      const packageInfo = PACKAGES[packageId];
+
+      for (const package of packageInfo.disablePackages) {
+        disabledPackages.push(package);
+      }
+
+      for (const command of packageInfo.disableCommands) {
+        disabledCommands.push(command);
+      }
+    }
+  }
 
   const packagesTitle = getTemplate("selectionTitle");
   packagesTitle.querySelector(".label").replaceChildren(
@@ -37,28 +61,29 @@ function populateSelections() {
   for (const packageId in PACKAGES) {
     const package = PACKAGES[packageId];
     const template = getTemplate("selectionCheckbox");
+    const disabled = disabledPackages.indexOf(packageId) != -1;
 
     // Update label text
     const label = template.querySelector(".label");
     label.replaceChildren(new Text(package.title));
+    if (disabled) {
+      label.classList.add("disabled");
+    }
 
     // Update checkbox properties
     const checkbox = template.querySelector("input");
     checkbox.checked = packageId in selectionState;
-    checkbox.addEventListener("change", function() {
-      if (this.checked) {
-        selectionState[packageId] = {};
-      } else {
-        delete selectionState[packageId];
-      }
-      populateSelections();
-    });
-
-    // Add to disabled commands
-    if (packageId in selectionState) {
-      for (const command of package.disableCommands) {
-        disabledCommands.push(command);
-      }
+    if (!disabled) {
+      checkbox.addEventListener("change", function() {
+        if (this.checked) {
+          selectionState[packageId] = {};
+        } else {
+          delete selectionState[packageId];
+        }
+        populateSelections();
+      });
+    } else {
+      checkbox.disabled = true;
     }
 
     selectionsParent.append(template);

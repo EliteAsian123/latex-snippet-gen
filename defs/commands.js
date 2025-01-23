@@ -89,6 +89,20 @@ const COMMANDS = {
       "reals"
     ]
   },
+  "cP": {
+    title: `Insert set of prime numbers "ℙ"`,
+    description: "Inserts the ℙ symbol, (sometimes) used to represent a set of all of the prime numbers.",
+    defaultName: "PP",
+    defaultSelect: true,
+    definition: "\\NewDocumentCommand{@_name@}{}{\\mathbb{P}}"
+  },
+  "cH": {
+    title: `Insert set of quaternions "ℍ"`,
+    description: "Inserts the ℍ symbol, used to represent a set of all of the quaternions.",
+    defaultName: "HH",
+    defaultSelect: true,
+    definition: "\\NewDocumentCommand{@_name@}{}{\\mathbb{H}}"
+  },
   "cBraces": {
     title: `Wrap in auto-sizing braces "{x}"`,
     description: "Inserts a pair of auto-sizing braces around the argument.",
@@ -150,35 +164,42 @@ const COMMANDS = {
     ]
   },
   "cSpanOperator": {
-    title: `Insert the "span" operator`,
+    title: `Insert "span" operator`,
     description: `Inserts the "span" operator.`,
     defaultName: "spn",
     defaultSelect: true,
     definition: "\\DeclareMathOperator{@_name@}{span}"
   },
+  "cImageOperator": {
+    title: `Insert "image" operator`,
+    description: `Inserts the "image" operator.`,
+    defaultName: "img",
+    defaultSelect: true,
+    definition: "\\DeclareMathOpeartor{@_name@}{image}"
+  },
   "cLcmOperator": {
-    title: `Insert the "lcm" operator`,
+    title: `Insert "lcm" operator`,
     description: `Inserts the "lcm" (least common multiple) operator.`,
     defaultName: "lcm",
     defaultSelect: true,
     definition: "\\DeclareMathOperator{@_name@}{lcm}"
   },
   "cTrOperator": {
-    title: `Insert the "tr" operator`,
+    title: `Insert "tr" operator`,
     description: `Inserts the "tr" (trace) operator.`,
     defaultName: "tr",
     defaultSelect: true,
     definition: "\\DeclareMathOperator{@_name@}{tr}"
   },
   "cRankOperator": {
-    title: `Insert the "rank" operator`,
+    title: `Insert "rank" operator`,
     description: `Inserts the "rank" operator.`,
     defaultName: "rank",
     defaultSelect: true,
     definition: "\\DeclareMathOperator{@_name@}{rank}"
   },
   "cErfOperator": {
-    title: `Insert the "erf" operator`,
+    title: `Insert "erf" operator`,
     description: `Inserts the "erf" (error function) operator.`,
     defaultName: "erf",
     defaultSelect: true,

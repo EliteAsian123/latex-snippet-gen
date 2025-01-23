@@ -1,18 +1,18 @@
 const PREFS = {
   "boldText": {
-    value: "textbf",
+    value: "\\textbf{@}",
     type: "wrap"
   },
   "italicText": {
-    value: "textit",
+    value: "\\textit{@}",
     type: "wrap"
   },
   "underlineText": {
-    value: "underline",
+    value: "\\underline{@}",
     type: "wrap"
   },
   "monoText": {
-    value: "texttt",
+    value: "\\texttt{@}",
     type: "wrap"
   },
   "naturals": {
@@ -62,7 +62,15 @@ const PREFS = {
   "lcm": {
     value: "\\operatorname{lcm}",
     type: "insert"
-  }
+  },
+  "derivative": {
+    value: "\\frac{d@1@}{d@2@}",
+    type: "command"
+  },
+  "nDerivative": {
+    value: "\\frac{d^{@1@}@2@}{d@3@^{@1@}}",
+    type: "command"
+  },
 };
 
 function getPrefs() {

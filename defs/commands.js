@@ -1,7 +1,7 @@
 const COMMANDS = {
   "cBold": {
     title: "Make bold",
-    description: "Bolds text.",
+    description: "Bolds the text in the argument.",
     defaultName: "B",
     defaultSelect: false,
     definition: "\\NewDocumentCommand{@_name@}{m}{\\textbf{#1}}",
@@ -11,7 +11,7 @@ const COMMANDS = {
   },
   "cItalic": {
     title: "Make italic",
-    description: "Italicizes text.",
+    description: "Italicizes the text in the argument.",
     defaultName: "I",
     defaultSelect: false,
     definition: "\\NewDocumentCommand{@_name@}{m}{\\textit{#1}}",
@@ -21,7 +21,7 @@ const COMMANDS = {
   },
   "cUnderline": {
     title: "Make underline",
-    description: "Underlines text.",
+    description: "Underlines the text in the argument.",
     defaultName: "U",
     defaultSelect: false,
     definition: "\\NewDocumentCommand{@_name@}{m}{\\underline{#1}}",
@@ -31,7 +31,7 @@ const COMMANDS = {
   },
   "cMono": {
     title: "Make mono",
-    description: "Switches to the monospace font.",
+    description: "Switches the argument to the monospace font.",
     defaultName: "mono",
     defaultSelect: false,
     definition: "\\NewDocumentCommand{@_name@}{m}{\\texttt{#1}}",
@@ -204,5 +204,5 @@ const COMMANDS = {
     defaultName: "erf",
     defaultSelect: true,
     definition: "\\DeclareMathOperator{@_name@}{erf}"
-  },
+  }
 };

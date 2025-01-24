@@ -51,6 +51,10 @@ const PREFS = {
     value: "\\left|@\\right|",
     type: "wrap"
   },
+  "norm": {
+    value: "\\left\\|@\\right\\|",
+    type: "wrap"
+  },
   "where": {
     value: "\\;\\middle|\\;",
     type: "insert"

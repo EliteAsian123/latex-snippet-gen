@@ -1,13 +1,23 @@
 const selectionsParent = document.getElementById("selections");
+const descriptionElem = document.getElementById("description");
+
 let selectionState;
 
 reset();
 populateSelections();
 
+function selectPackage(packageId, package) {
+  selectionState[packageId] = {};
+}
+
 function selectCommand(commandId, command) {
   selectionState[commandId] = {
     name: command.defaultName
   };
+}
+
+function selectSnippet(snippetId, snippet) {
+  selectionState[snippetId] = {};
 }
 
 function reset() {
@@ -17,7 +27,7 @@ function reset() {
     const package = PACKAGES[packageId];
 
     if (package.defaultSelect) {
-      selectionState[packageId] = {};
+      selectPackage(packageId);
     }
   }
 
@@ -27,6 +37,67 @@ function reset() {
     if (command.defaultSelect) {
       selectCommand(commandId, command);
     }
+  }
+
+  for (const snippetId in SNIPPETS) {
+    const snippet = SNIPPETS[snippetId];
+
+    if (snippet.defaultSelect) {
+      selectSnippet(snippetId, snippet);
+    }
+  }
+}
+
+function generateCheckboxes(
+  selectionsParent, title, definitions, disabledDefinitions, selectFunc, updatesSelectionsList
+) {
+  const titleElem = getTemplate("selectionTitle");
+  titleElem.querySelector(".label").replaceChildren(
+    new Text(title));
+  titleElem.querySelector(".info").replaceChildren(
+    new Text(`(${Object.keys(definitions).length})`));
+  selectionsParent.append(titleElem);
+
+  for (const defId in definitions) {
+    const definition = definitions[defId];
+    const template = getTemplate("selectionCheckbox");
+    const disabled = disabledDefinitions.indexOf(defId) != -1;
+
+    // Update label text
+    const label = template.querySelector(".label");
+    label.replaceChildren(new Text(definition.title));
+    if (disabled) {
+      label.classList.add("disabled");
+    }
+
+    // Update checkbox properties
+    const checkbox = template.querySelector("input");
+    checkbox.checked = defId in selectionState;
+    if (!disabled) {
+      checkbox.addEventListener("change", function() {
+        if (this.checked) {
+          selectFunc(defId, definition);
+        } else {
+          delete selectionState[defId];
+        }
+
+        if (updatesSelectionsList) {
+          populateSelections();
+        }
+      });
+    } else {
+      checkbox.disabled = true;
+    }
+
+    checkbox.parentElement.addEventListener("mouseenter", function() {
+      if (definition.description !== undefined) {
+        descriptionElem.replaceChildren(new Text(definition.description));
+      } else {
+        descriptionElem.innerHTML = "";
+      }
+    });
+
+    selectionsParent.append(template);
   }
 }
 
@@ -51,80 +122,32 @@ function populateSelections() {
     }
   }
 
-  const packagesTitle = getTemplate("selectionTitle");
-  packagesTitle.querySelector(".label").replaceChildren(
-    new Text("LaTeX Package Preferences"));
-  packagesTitle.querySelector(".info").replaceChildren(
-    new Text(`(${Object.keys(PACKAGES).length})`));
-  selectionsParent.append(packagesTitle);
+  generateCheckboxes(
+    selectionsParent,
+    "LaTeX Package Preferences",
+    PACKAGES,
+    disabledPackages,
+    selectPackage,
+    true
+  );
 
-  for (const packageId in PACKAGES) {
-    const package = PACKAGES[packageId];
-    const template = getTemplate("selectionCheckbox");
-    const disabled = disabledPackages.indexOf(packageId) != -1;
+  generateCheckboxes(
+    selectionsParent,
+    "LaTeX Commands",
+    COMMANDS,
+    disabledCommands,
+    selectCommand,
+    false
+  );
 
-    // Update label text
-    const label = template.querySelector(".label");
-    label.replaceChildren(new Text(package.title));
-    if (disabled) {
-      label.classList.add("disabled");
-    }
-
-    // Update checkbox properties
-    const checkbox = template.querySelector("input");
-    checkbox.checked = packageId in selectionState;
-    if (!disabled) {
-      checkbox.addEventListener("change", function() {
-        if (this.checked) {
-          selectionState[packageId] = {};
-        } else {
-          delete selectionState[packageId];
-        }
-        populateSelections();
-      });
-    } else {
-      checkbox.disabled = true;
-    }
-
-    selectionsParent.append(template);
-  }
-
-  const commandsTitle = getTemplate("selectionTitle");
-  commandsTitle.querySelector(".label").replaceChildren(
-    new Text("LaTeX Commands"));
-  commandsTitle.querySelector(".info").replaceChildren(
-    new Text(`(${Object.keys(COMMANDS).length})`));
-  selectionsParent.append(commandsTitle);
-
-  for (const commandId in COMMANDS) {
-    const command = COMMANDS[commandId];
-    const template = getTemplate("selectionCheckbox");
-    const disabled = disabledCommands.indexOf(commandId) != -1;
-
-    // Update label text
-    const label = template.querySelector(".label");
-    label.replaceChildren(new Text(command.title));
-    if (disabled) {
-      label.classList.add("disabled");
-    }
-
-    // Update checkbox properties
-    const checkbox = template.querySelector("input");
-    checkbox.checked = commandId in selectionState;
-    if (!disabled) {
-      checkbox.addEventListener("change", function() {
-        if (this.checked) {
-          selectCommand(commandId, command);
-        } else {
-          delete selectionState[commandId];
-        }
-      });
-    } else {
-      checkbox.disabled = true;
-    }
-
-    selectionsParent.append(template);
-  }
+  generateCheckboxes(
+    selectionsParent,
+    "Snippets",
+    SNIPPETS,
+    [],
+    selectSnippet,
+    false
+  );
 }
 
 function getTemplate(templateId) {

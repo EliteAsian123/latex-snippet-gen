@@ -107,6 +107,13 @@ const COMMANDS = {
     defaultSelect: true,
     definition: "\\NewDocumentCommand{@}{}{\\mathbb{H}}"
   },
+  "cDegreeSymbol": {
+    title: `Insert the degree symbol "°"`,
+    description: `Inserts the degree symbol in math or text mode.`,
+    defaultName: "degree",
+    defaultSelect: true,
+    definition: "\\NewDocumentCommand{@}{}{\\ensuremath{^\\circ}}"
+  },
   "cBraces": {
     title: `Wrap in auto-sizing braces "{x}"`,
     description: "Inserts a pair of auto-sizing braces around the argument.",

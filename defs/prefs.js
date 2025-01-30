@@ -78,23 +78,56 @@ const PREFS = {
 };
 
 function getPrefs() {
-  let prefs = { ...PREFS };
+  if (prefsCache !== undefined) {
+    return prefsCache;
+  }
 
-  // if (command.prefChanges !== undefined) {
-  //   for (const prefChange of command.prefChanges) {
-  //     if (!(prefChange in currentPrefs)) {
-  //       console.error(`Pref change ${prefChange} doesn't exist!`);
-  //       continue;
-  //     }
+  let prefs = structuredClone(PREFS);
 
-  //     const pref = currentPrefs[prefChange];
-  //     if (pref.type === "command") {
-  //       currentPrefs[prefChange].value = name;
-  //     } else if (pref.type === "symbol") {
-  //       currentPrefs[prefChange].value = `\\${name}`;
-  //     } else if (pref.type === "wrap") {
-  //       currentPrefs[prefChange].value = `\\${name}{@}`;
-  //     }
-  //   }
-  // }
+  // Packages first
+  for (const packageId in selectionState) {
+    if (packageId in PACKAGES) {
+      const package = PACKAGES[packageId];
+      for (const pref in package.prefReplacements) {
+        if (!(pref in prefs)) {
+          console.error(`Pref change ${prefChange} doesn't exist!`);
+          continue;
+        }
+
+        const replacement = package.prefReplacements[pref];
+        prefs[pref].value = replacement;
+      }
+    }
+  }
+
+  // Commands next
+  for (const commandId in selectionState) {
+    const commandInfo = selectionState[commandId];
+
+    if (commandId in COMMANDS) {
+      const command = COMMANDS[commandId];
+      if (command.prefChanges === undefined) {
+        continue;
+      }
+
+      for (const prefChange of command.prefChanges) {
+        if (!(prefChange in prefs)) {
+          console.error(`Pref change ${prefChange} in ${commandId} doesn't exist!`);
+          continue;
+        }
+
+        const pref = prefs[prefChange];
+        if (pref.type === "insert") {
+          prefs[prefChange].value = `\\${commandInfo.name}`;
+        } else if (pref.type === "wrap") {
+          prefs[prefChange].value = `\\${commandInfo.name}{@}`;
+        } else {
+          console.error(`Pref change for ${commandId} unsupported.`);
+        }
+      }
+    }
+  }
+
+  prefsCache = prefs;
+  return prefs;
 }

@@ -1,7 +1,13 @@
 const selectionsParent = document.getElementById("selections");
 const descriptionElem = document.getElementById("description");
 
+const previewElem = document.getElementById("preview");
+
+const snippetElem = document.getElementById("snippet");
+const snippetToElem = document.getElementById("snippetTo");
+
 let selectionState;
+let prefsCache;
 
 reset();
 populateSelections();
@@ -17,7 +23,9 @@ function selectCommand(commandId, command) {
 }
 
 function selectSnippet(snippetId, snippet) {
-  selectionState[snippetId] = {};
+  selectionState[snippetId] = {
+    name: snippet.defaultName
+  };
 }
 
 function reset() {
@@ -49,7 +57,8 @@ function reset() {
 }
 
 function generateCheckboxes(
-  selectionsParent, title, definitions, disabledDefinitions, selectFunc, updatesSelectionsList
+  selectionsParent, title, definitions, disabledDefinitions, selectFunc, updatesSelectionsList,
+  hoverFunc
 ) {
   const titleElem = getTemplate("selectionTitle");
   titleElem.querySelector(".label").replaceChildren(
@@ -80,6 +89,7 @@ function generateCheckboxes(
         } else {
           delete selectionState[defId];
         }
+        prefsCache = undefined;
 
         if (updatesSelectionsList) {
           populateSelections();
@@ -91,10 +101,12 @@ function generateCheckboxes(
 
     checkbox.parentElement.addEventListener("mouseenter", function() {
       if (definition.description !== undefined) {
-        descriptionElem.replaceChildren(new Text(definition.description));
+        descriptionElem.textContent = definition.description;
       } else {
-        descriptionElem.innerHTML = "";
+        descriptionElem.textContent = "";
       }
+
+      hoverFunc?.(defId, definition);
     });
 
     selectionsParent.append(template);
@@ -128,7 +140,11 @@ function populateSelections() {
     PACKAGES,
     disabledPackages,
     selectPackage,
-    true
+    true,
+    () => {
+      previewElem.textContent = "";
+      snippetElem.style.display = "none";
+    }
   );
 
   generateCheckboxes(
@@ -137,7 +153,24 @@ function populateSelections() {
     COMMANDS,
     disabledCommands,
     selectCommand,
-    false
+    false,
+    (id, command) => {
+      let name;
+      if (id in selectionState) {
+        name = selectionState[id].name;
+      } else {
+        name = command.defaultName;
+      }
+
+      let args = "";
+      if (command.argumentPreview !== undefined) {
+        args = command.argumentPreview;
+      }
+
+      previewElem.textContent = `\\${name}${args}`;
+
+      snippetElem.style.display = "none";
+    }
   );
 
   generateCheckboxes(
@@ -146,7 +179,21 @@ function populateSelections() {
     SNIPPETS,
     [],
     selectSnippet,
-    false
+    false,
+    (id, snippet) => {
+      snippetElem.style.display = "block";
+
+      if (id in selectionState) {
+        previewElem.textContent = selectionState[id].name;
+      } else {
+        previewElem.textContent = snippet.defaultName;
+      }
+
+      const prefs = getPrefs();
+      console.log(PREFS);
+      const definition = parseDefinition(prefs, snippet.definition);
+      snippetToElem.textContent = definition;
+    }
   );
 }
 
@@ -200,38 +247,7 @@ function exportSty() {
       }
 
       const command = COMMANDS[selectionId];
-
-      let parsedDef = "";
-      let atWord = "";
-      let atMode = false;
-      for (const c of command.definition) {
-        if (!atMode) {
-          if (c === "@") {
-            atMode = true;
-          } else {
-            parsedDef += c;
-          }
-        } else {
-          if (c === "@") {
-            atMode = false;
-
-            if (atWord === "_name") {
-              parsedDef += "\\" + selection.name;
-            } else {
-              console.warn("Unknown at. Inserting nothing.");
-            }
-
-            atWord = "";
-          } else {
-            atWord += c;
-          }
-        }
-      }
-
-      if (atMode) {
-        console.error("Unclosed at!");
-        continue;
-      }
+      let parsedDef = command.definition.replaceAll("@", selection.name);
 
       commandSection += parsedDef + "\n";
     }
@@ -243,4 +259,97 @@ function exportSty() {
 
   let blob = new Blob([file], { type: "text/plain;charset=utf-8" });
   saveAs(blob, "cmd.sty");
+}
+
+function expandPref(prefs, atWord) {
+  const split = atWord.split(";");
+  const name = split[0];
+
+  if (!(name in prefs)) {
+    console.error(`Unknown pref ${name}. Returning nothing.`);
+    return "";
+  }
+
+  const pref = prefs[name];
+  if (pref.type === "insert") {
+    if (split.length > 1) {
+      console.warn(`Too many arguments on ${name}.`);
+    }
+
+    return pref.value;
+  } else if (pref.type === "wrap") {
+    if (split.length < 2) {
+      console.error(`Not enough arguments on ${name}. Returning nothing.`);
+      return "";
+    }
+
+    if (split.length > 2) {
+      console.warn(`Too many arguments on ${name}.`);
+    }
+
+    return pref.value.replaceAll("@", split[1]);
+  } else if (pref.type === "command") {
+    let value = pref.value;
+    for (let i = 1; i < split.length; i++) {
+      value = value.replaceAll(`@${i}@`, split[i]);
+    }
+    return value;
+  }
+}
+
+function parseDefinition(prefs, definition) {
+  let parsedDef = "";
+  let atWord = "";
+  let atMode = false;
+  for (const c of definition) {
+    if (!atMode) {
+      if (c === "@") {
+        atMode = true;
+      } else {
+        parsedDef += c;
+      }
+    } else {
+      if (c === "@") {
+        atMode = false;
+        parsedDef += expandPref(prefs, atWord);
+        atWord = "";
+      } else {
+        atWord += c;
+      }
+    }
+  }
+
+  if (atMode) {
+    console.error("Unclosed at!");
+    return undefined;
+  }
+
+  return parsedDef;
+}
+
+function exportVscodeSnippets() {
+  const prefs = getPrefs();
+  let data = {};
+
+  for (const selectionId in selectionState) {
+    const selection = selectionState[selectionId];
+
+    if (selectionId in SNIPPETS) {
+      const snippet = SNIPPETS[selectionId];
+
+      const parsedDef = parseDefinition(prefs, snippet.definition);
+      if (parsedDef === undefined) {
+        continue;
+      }
+
+      data[snippet.title] = {
+        prefix: selection.name,
+        description: snippet.description,
+        body: parsedDef.split("\n")
+      };
+    }
+  }
+
+  let blob = new Blob([JSON.stringify(data, null, 2)], { type: "text/plain;charset=utf-8" });
+  saveAs(blob, "latex.json");
 }

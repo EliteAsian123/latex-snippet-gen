@@ -13,9 +13,10 @@
   <main>
     <div id="top">
       <div>
-        LaTeX Snippet Generator v1.0
+        LaTeX Snippet Generator v1.0 | <a href="https://github.com/EliteAsian123/latex-snippet-gen/">GitHub</a>
       </div>
       <div>
+        <button onclick="exportVscodeSnippets()">Export VSCode Snippets (.json)</button>
         <button onclick="exportSty()">Export Commands (.sty)</button>
       </div>
     </div>
@@ -25,6 +26,12 @@
         <p id="description">
           Hover over an option to see its description.
         </p>
+        <p>Preview:</p>
+        <pre id="preview"></pre>
+        <div id="snippet" style="display: none;">
+          <p>Expands to:</p>
+          <pre id="snippetTo"></pre>
+        </div>
       </div>
     </div>
   </main>

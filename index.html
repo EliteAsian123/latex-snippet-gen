@@ -13,11 +13,19 @@
   <main>
     <div id="top">
       <div>
-        LaTeX Snippet Generator | <a href="https://github.com/EliteAsian123/latex-snippet-gen/">GitHub</a>
+        LaTeX Snippet Generator
+        <span style="opacity: 0.5;">|</span>
+        <a href="https://github.com/EliteAsian123/latex-snippet-gen/">GitHub</a>
       </div>
       <div>
-        <button onclick="exportVscodeSnippets()">Export VSCode Snippets (.json)</button>
-        <button onclick="exportSty()">Export Commands (.sty)</button>
+        <button
+          onclick="exportVscodeSnippets()"
+          onmouseenter="hoverVscode()"
+        >Export VSCode Snippets (.json)</button>
+        <button
+          onclick="exportSty()"
+          onmouseenter="hoverSty()"
+        >Export Commands (.sty)</button>
       </div>
     </div>
     <div id="split">
@@ -26,16 +34,58 @@
         <p id="description">
           Hover over an option to see its description.
         </p>
-        <p>Preview:</p>
-        <pre id="preview"></pre>
-        <div id="snippet" style="display: none;">
+        <div id="preview" style="display: none;">
+          <p>Preview:</p>
+          <pre id="previewInner"></pre>
+        </div>
+        <div id="expands" style="display: none;">
           <p>Expands to:</p>
-          <pre id="snippetTo"></pre>
+          <pre id="expandsInner"></pre>
+        </div>
+
+        <div id="styGuide" style="display: none;">
+          In order to use the exported <code>.sty</code> file in your LaTeX document,
+          put the file in the same directory as your <code>.tex</code> file,
+          and import it using <code>\usepackage</code>.
+
+<pre>\documentclass{article}
+
+<span style="color: red;">\usepackage{./cmd}</span>
+
+\begin{document}
+...</pre>
+
+          Alternatively, you can copy and paste the contents of the <code>.sty</code>
+          file at the top of your LaTeX document.
+          <br/><br/>
+          Note that the <code>.sty</code> file always imports the <code>xparse</code>
+          and <code>amsmath</code> packages (along with the additional packages
+          you selected).
+        </div>
+        <div id="vscodeGuide" style="display: none;">
+          In order to use the VSCode snippet file, you must first be using the
+          "LaTeX Workshop" extension. Then, you must change the following settings:
+          <ul>
+            <li>
+              LaTeX &gt; Intellisense &gt; At Suggestion &gt; Trigger: Set to nothing
+              (empty string)
+            </li>
+            <li>
+              LaTeX &gt; Intellisense &gt; Triggers: Add an entry for the "@" symbol
+            </li>
+            <li>
+              Restart VSCode
+            </li>
+          </ul>
+          This disables some of the built-in snippets.
+          <br/><br/>
+          After this, open the command palette and enter "Snippets: Configure User Snippets".
+          Then, select "latex.json (LaTeX)", and either replace this file with the exported
+          one, or paste the contents of the exported one within.
         </div>
       </div>
     </div>
   </main>
-
   <template id="selectionCheckbox">
     <div class="selectionCheckbox">
       <span>
@@ -61,7 +111,8 @@
   <script src="./defs/commands.js"></script>
   <script src="./defs/snippets.js"></script>
   <script src="./defs/prefs.js"></script>
-  <script src="./index.js"></script>
+  <script src="./export.js"></script>
+  <script src="./script.js"></script>
 </body>
 
 </html>

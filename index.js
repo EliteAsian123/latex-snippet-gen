@@ -1,3 +1,5 @@
+const LOCAL_STORAGE_KEY = "selectionState_v1";
+
 const selectionsParent = document.getElementById("selections");
 const descriptionElem = document.getElementById("description");
 
@@ -9,56 +11,62 @@ const snippetToElem = document.getElementById("snippetTo");
 let selectionState;
 let prefsCache;
 
-reset();
+init();
 populateSelections();
 
-function selectPackage(packageId, package) {
-  selectionState[packageId] = {};
-}
-
-function selectCommand(commandId, command) {
-  selectionState[commandId] = {
-    name: command.defaultName
-  };
-}
-
-function selectSnippet(snippetId, snippet) {
-  selectionState[snippetId] = {
-    name: snippet.defaultName
-  };
-}
-
-function reset() {
+function init() {
   selectionState = {};
+
+  let saved = localStorage.getItem(LOCAL_STORAGE_KEY);
+  if (saved !== null) {
+    try {
+      selectionState = JSON.parse(saved);
+    } catch (e) {
+      console.warn(e);
+    }
+  }
 
   for (const packageId in PACKAGES) {
     const package = PACKAGES[packageId];
 
-    if (package.defaultSelect) {
-      selectPackage(packageId);
+    if (!(packageId in selectionState)) {
+      selectionState[packageId] = {
+        selected: package.defaultSelect
+      };
     }
   }
 
   for (const commandId in COMMANDS) {
     const command = COMMANDS[commandId];
 
-    if (command.defaultSelect) {
-      selectCommand(commandId, command);
+    if (!(commandId in selectionState)) {
+      selectionState[commandId] = {
+        selected: command.defaultSelect,
+        name: command.defaultName
+      };
     }
   }
 
   for (const snippetId in SNIPPETS) {
     const snippet = SNIPPETS[snippetId];
 
-    if (snippet.defaultSelect) {
-      selectSnippet(snippetId, snippet);
+    if (!(snippetId in selectionState)) {
+      selectionState[snippetId] = {
+        selected: snippet.defaultSelect,
+        name: snippet.defaultName
+      };
     }
   }
+
+  save();
+}
+
+function save() {
+  localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(selectionState));
 }
 
 function generateCheckboxes(
-  selectionsParent, title, definitions, disabledDefinitions, selectFunc, updatesSelectionsList,
-  hoverFunc
+  selectionsParent, title, definitions, disabledDefinitions, updatesSelectionsList, hoverFunc
 ) {
   const titleElem = getTemplate("selectionTitle");
   titleElem.querySelector(".label").replaceChildren(
@@ -81,15 +89,16 @@ function generateCheckboxes(
 
     // Update checkbox properties
     const checkbox = template.querySelector("input");
-    checkbox.checked = defId in selectionState;
+    checkbox.checked = selectionState[defId].selected;
     if (!disabled) {
       checkbox.addEventListener("change", function() {
         if (this.checked) {
-          selectFunc(defId, definition);
+          selectionState[defId].selected = true;
         } else {
-          delete selectionState[defId];
+          selectionState[defId].selected = false;
         }
         prefsCache = undefined;
+        save();
 
         if (updatesSelectionsList) {
           populateSelections();
@@ -121,7 +130,7 @@ function populateSelections() {
 
   // Look at disabled packages and commands
   for (const packageId in PACKAGES) {
-    if (packageId in selectionState && disabledPackages.indexOf(packageId) == -1) {
+    if (selectionState[packageId].selected && disabledPackages.indexOf(packageId) == -1) {
       const packageInfo = PACKAGES[packageId];
 
       for (const package of packageInfo.disablePackages) {
@@ -139,7 +148,6 @@ function populateSelections() {
     "LaTeX Package Preferences",
     PACKAGES,
     disabledPackages,
-    selectPackage,
     true,
     () => {
       previewElem.textContent = "";
@@ -152,15 +160,9 @@ function populateSelections() {
     "LaTeX Commands",
     COMMANDS,
     disabledCommands,
-    selectCommand,
     false,
     (id, command) => {
-      let name;
-      if (id in selectionState) {
-        name = selectionState[id].name;
-      } else {
-        name = command.defaultName;
-      }
+      let name = selectionState[id].name;
 
       let args = "";
       if (command.argumentPreview !== undefined) {
@@ -178,19 +180,13 @@ function populateSelections() {
     "Snippets",
     SNIPPETS,
     [],
-    selectSnippet,
     false,
     (id, snippet) => {
       snippetElem.style.display = "block";
 
-      if (id in selectionState) {
-        previewElem.textContent = selectionState[id].name;
-      } else {
-        previewElem.textContent = snippet.defaultName;
-      }
+      previewElem.textContent = selectionState[id].name;
 
       const prefs = getPrefs();
-      console.log(PREFS);
       const definition = parseDefinition(prefs, snippet.definition);
       snippetToElem.textContent = definition;
     }
@@ -227,7 +223,7 @@ function exportSty() {
 
   let disabledCommands = [];
   for (const selectionId in selectionState) {
-    if (selectionId in PACKAGES) {
+    if (selectionState[selectionId].selected && selectionId in PACKAGES) {
       const package = PACKAGES[selectionId];
 
       packageSection += package.definition + "\n";
@@ -241,7 +237,7 @@ function exportSty() {
   for (const selectionId in selectionState) {
     const selection = selectionState[selectionId];
 
-    if (selectionId in COMMANDS) {
+    if (selection.selected && selectionId in COMMANDS) {
       if (disabledCommands.indexOf(selectionId) != -1) {
         continue;
       }
@@ -334,7 +330,7 @@ function exportVscodeSnippets() {
   for (const selectionId in selectionState) {
     const selection = selectionState[selectionId];
 
-    if (selectionId in SNIPPETS) {
+    if (selection.selected && selectionId in SNIPPETS) {
       const snippet = SNIPPETS[selectionId];
 
       const parsedDef = parseDefinition(prefs, snippet.definition);

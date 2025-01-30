@@ -86,7 +86,7 @@ function getPrefs() {
 
   // Packages first
   for (const packageId in selectionState) {
-    if (packageId in PACKAGES) {
+    if (selectionState[packageId].selected && packageId in PACKAGES) {
       const package = PACKAGES[packageId];
       for (const pref in package.prefReplacements) {
         if (!(pref in prefs)) {
@@ -104,7 +104,7 @@ function getPrefs() {
   for (const commandId in selectionState) {
     const commandInfo = selectionState[commandId];
 
-    if (commandId in COMMANDS) {
+    if (commandInfo.selected && commandId in COMMANDS) {
       const command = COMMANDS[commandId];
       if (command.prefChanges === undefined) {
         continue;

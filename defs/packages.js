@@ -41,4 +41,4 @@ const PACKAGES = {
     },
     definition: "\\usepackage{derivative}"
   }
-}
+};

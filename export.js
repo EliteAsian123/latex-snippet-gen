@@ -6,6 +6,7 @@ function exportSty() {
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \\usepackage{xparse}
+\\usepackage{amssymb}
 \\usepackage{amsmath}
 `;
 

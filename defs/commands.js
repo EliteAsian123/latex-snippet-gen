@@ -4,7 +4,7 @@ const COMMANDS = {
     description: "Bolds the text in the argument.",
     defaultName: "B",
     defaultSelect: false,
-    definition: "\\NewDocumentCommand{@}{m}{\\textbf{#1}}",
+    definition: "\\NewDocumentCommand{\\@}{m}{\\textbf{#1}}",
     argumentPreview: "{}",
     prefChanges: [
       "boldText"
@@ -15,7 +15,7 @@ const COMMANDS = {
     description: "Italicizes the text in the argument.",
     defaultName: "I",
     defaultSelect: false,
-    definition: "\\NewDocumentCommand{@}{m}{\\textit{#1}}",
+    definition: "\\NewDocumentCommand{\\@}{m}{\\textit{#1}}",
     argumentPreview: "{}",
     prefChanges: [
       "italicText"
@@ -26,7 +26,7 @@ const COMMANDS = {
     description: "Underlines the text in the argument.",
     defaultName: "U",
     defaultSelect: false,
-    definition: "\\NewDocumentCommand{@}{m}{\\underline{#1}}",
+    definition: "\\NewDocumentCommand{\\@}{m}{\\underline{#1}}",
     argumentPreview: "{}",
     prefChanges: [
       "underlineText"
@@ -37,7 +37,7 @@ const COMMANDS = {
     description: "Switches the argument to the monospace font.",
     defaultName: "mono",
     defaultSelect: false,
-    definition: "\\NewDocumentCommand{@}{m}{\\texttt{#1}}",
+    definition: "\\NewDocumentCommand{\\@}{m}{\\texttt{#1}}",
     argumentPreview: "{}",
     prefChanges: [
       "monoText"
@@ -48,7 +48,7 @@ const COMMANDS = {
     description: "Inserts the ℕ symbol, used to represent the set of all natural numbers (typically {0, 1, 2, 3, ...} or {1, 2, 3, ...}, depending on convention).",
     defaultName: "NN",
     defaultSelect: true,
-    definition: "\\NewDocumentCommand{@}{}{\\mathbb{N}}",
+    definition: "\\NewDocumentCommand{\\@}{}{\\mathbb{N}}",
     prefChanges: [
       "naturals"
     ]
@@ -58,7 +58,7 @@ const COMMANDS = {
     description: "Inserts the ℤ symbol, used to represent the set of all integers (..., -2, -1, 0, 1, 2, ...).",
     defaultName: "ZZ",
     defaultSelect: true,
-    definition: "\\NewDocumentCommand{@}{}{\\mathbb{Z}}",
+    definition: "\\NewDocumentCommand{\\@}{}{\\mathbb{Z}}",
     prefChanges: [
       "integers"
     ]
@@ -68,7 +68,7 @@ const COMMANDS = {
     description: "Inserts the ℚ symbol, used to represent the set of all rational numbers (fractions of integers, where the denominator is nonzero).",
     defaultName: "QQ",
     defaultSelect: true,
-    definition: "\\NewDocumentCommand{@}{}{\\mathbb{Q}}",
+    definition: "\\NewDocumentCommand{\\@}{}{\\mathbb{Q}}",
     prefChanges: [
       "rationals"
     ]
@@ -78,7 +78,7 @@ const COMMANDS = {
     description: "Inserts the ℂ symbol, used to represent the set of all complex numbers (numbers of the form a + bi, where i is the imaginary unit).",
     defaultName: "CC",
     defaultSelect: true,
-    definition: "\\NewDocumentCommand{@}{}{\\mathbb{C}}",
+    definition: "\\NewDocumentCommand{\\@}{}{\\mathbb{C}}",
     prefChanges: [
       "complex"
     ]
@@ -88,7 +88,7 @@ const COMMANDS = {
     description: "Inserts the ℝ symbol, used to represent a set of all of the real numbers.",
     defaultName: "RR",
     defaultSelect: true,
-    definition: "\\NewDocumentCommand{@}{}{\\mathbb{R}}",
+    definition: "\\NewDocumentCommand{\\@}{}{\\mathbb{R}}",
     prefChanges: [
       "reals"
     ]
@@ -98,28 +98,28 @@ const COMMANDS = {
     description: "Inserts the ℙ symbol, (sometimes) used to represent a set of all of the prime numbers.",
     defaultName: "PP",
     defaultSelect: true,
-    definition: "\\NewDocumentCommand{@}{}{\\mathbb{P}}"
+    definition: "\\NewDocumentCommand{\\@}{}{\\mathbb{P}}"
   },
   "cH": {
     title: `Insert set of quaternions "ℍ"`,
     description: "Inserts the ℍ symbol, used to represent a set of all of the quaternions.",
     defaultName: "HH",
     defaultSelect: true,
-    definition: "\\NewDocumentCommand{@}{}{\\mathbb{H}}"
+    definition: "\\NewDocumentCommand{\\@}{}{\\mathbb{H}}"
   },
   "cDegreeSymbol": {
     title: `Insert the degree symbol "°"`,
     description: `Inserts the degree symbol in math or text mode.`,
     defaultName: "degree",
     defaultSelect: true,
-    definition: "\\NewDocumentCommand{@}{}{\\ensuremath{^\\circ}}"
+    definition: "\\NewDocumentCommand{\\@}{}{\\ensuremath{^\\circ}}"
   },
   "cBraces": {
     title: `Wrap in auto-sizing braces "{x}"`,
     description: "Inserts a pair of auto-sizing braces around the argument.",
     defaultName: "q",
     defaultSelect: false,
-    definition: "\\NewDocumentCommand{@}{m}{\\ensuremath{\\left\\{#1\\right\\}}}",
+    definition: "\\NewDocumentCommand{\\@}{m}{\\ensuremath{\\left\\{#1\\right\\}}}",
     argumentPreview: "{}",
     prefChanges: [
       "braces"
@@ -130,7 +130,7 @@ const COMMANDS = {
     description: "Inserts a pair of auto-sizing parentheses around the argument.",
     defaultName: "p",
     defaultSelect: false,
-    definition: "\\NewDocumentCommand{@}{m}{\\ensuremath{\\left(#1\\right)}}",
+    definition: "\\NewDocumentCommand{\\@}{m}{\\ensuremath{\\left(#1\\right)}}",
     argumentPreview: "{}",
     prefChanges: [
       "parens"
@@ -141,7 +141,7 @@ const COMMANDS = {
     description: "Inserts a pair of auto-sizing square brackets around the argument.",
     defaultName: "s",
     defaultSelect: false,
-    definition: "\\NewDocumentCommand{@}{m}{\\ensuremath{\\left[#1\\right]}}",
+    definition: "\\NewDocumentCommand{\\@}{m}{\\ensuremath{\\left[#1\\right]}}",
     argumentPreview: "{}",
     prefChanges: [
       "brackets"
@@ -152,7 +152,7 @@ const COMMANDS = {
     description: "Inserts a pair of auto-sizing absolute value bars around the argument.",
     defaultName: "abs",
     defaultSelect: true,
-    definition: "\\NewDocumentCommand{@}{m}{\\ensuremath{\\left\\lvert#1\\right\\rvert}}",
+    definition: "\\NewDocumentCommand{\\@}{m}{\\ensuremath{\\left\\lvert#1\\right\\rvert}}",
     argumentPreview: "{}",
     prefChanges: [
       "abs"
@@ -163,7 +163,7 @@ const COMMANDS = {
     description: "Inserts a pair of auto-sizing normalize value bars (double vertical bars) around the argument.",
     defaultName: "norm",
     defaultSelect: true,
-    definition: "\\NewDocumentCommand{@}{m}{\\ensuremath{\\left\\lVert#1\\right\\rVert}}",
+    definition: "\\NewDocumentCommand{\\@}{m}{\\ensuremath{\\left\\lVert#1\\right\\rVert}}",
     argumentPreview: "{}",
     prefChanges: [
       "norm"
@@ -174,7 +174,7 @@ const COMMANDS = {
     description: `Inserts a vertical bar that auto-sizes to the pair of auto-sizing brackets (of any kind) it is within. This is often used as a "where" symbol within set-builder notation.`,
     defaultName: "where",
     defaultSelect: false,
-    definition: "\\NewDocumentCommand{@}{}{\\;\\middle|\\;}",
+    definition: "\\NewDocumentCommand{\\@}{}{\\ensuremath{\\;\\middle|\\;}}",
     prefChanges: [
       "where"
     ]
@@ -184,41 +184,41 @@ const COMMANDS = {
     description: `Inserts the "span" operator.`,
     defaultName: "spn",
     defaultSelect: true,
-    definition: "\\DeclareMathOperator{@}{span}"
+    definition: "\\DeclareMathOperator{\\@}{span}"
   },
   "cImageOperator": {
     title: `Insert "image" operator`,
     description: `Inserts the "image" operator.`,
     defaultName: "img",
     defaultSelect: true,
-    definition: "\\DeclareMathOpeartor{@}{image}"
+    definition: "\\DeclareMathOperator{\\@}{image}"
   },
   "cLcmOperator": {
     title: `Insert "lcm" operator`,
     description: `Inserts the "lcm" (least common multiple) operator.`,
     defaultName: "lcm",
     defaultSelect: true,
-    definition: "\\DeclareMathOperator{@}{lcm}"
+    definition: "\\DeclareMathOperator{\\@}{lcm}"
   },
   "cTrOperator": {
     title: `Insert "tr" operator`,
     description: `Inserts the "tr" (trace) operator.`,
     defaultName: "tr",
     defaultSelect: true,
-    definition: "\\DeclareMathOperator{@}{tr}"
+    definition: "\\DeclareMathOperator{\\@}{tr}"
   },
   "cRankOperator": {
     title: `Insert "rank" operator`,
     description: `Inserts the "rank" operator.`,
     defaultName: "rank",
     defaultSelect: true,
-    definition: "\\DeclareMathOperator{@}{rank}"
+    definition: "\\DeclareMathOperator{\\@}{rank}"
   },
   "cErfOperator": {
     title: `Insert "erf" operator`,
     description: `Inserts the "erf" (error function) operator.`,
     defaultName: "erf",
     defaultSelect: true,
-    definition: "\\DeclareMathOperator{@}{erf}"
+    definition: "\\DeclareMathOperator{\\@}{erf}"
   }
 };

@@ -62,4 +62,18 @@ const SNIPPETS = {
     defaultSelect: true,
     definition: "@norm;$1@"
   },
+  "sGather": {
+    title: `Insert a "gather*" environment`,
+    description: `Inserts a "gather*" environment.`,
+    defaultName: "gather",
+    defaultSelect: true,
+    definition: "\\begin{gather*}\n\t$1\n\\end{gather*}"
+  },
+  "sAlign": {
+    title: `Insert an "align*" environment`,
+    description: `Inserts an "align*" environment.`,
+    defaultName: "align",
+    defaultSelect: true,
+    definition: "\\begin{align*}\n\t$1\n\\end{align*}"
+  },
 };

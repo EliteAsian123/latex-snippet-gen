@@ -69,6 +69,14 @@ function save() {
   localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(selectionState));
 }
 
+function resetSelections() {
+  if (confirm("Are you sure you want to reset your selections? This cannot be undone.")) {
+    localStorage.removeItem(LOCAL_STORAGE_KEY);
+    init();
+    populateSelections();
+  }
+}
+
 function generateCheckboxes(
   selectionsParent, title, definitions, disabledDefinitions, updatesSelectionsList, hoverFunc
 ) {

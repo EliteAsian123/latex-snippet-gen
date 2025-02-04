@@ -79,14 +79,14 @@ const SNIPPETS = {
   "sDerivative": {
     title: "Insert derivative (Leibniz)",
     description: "Insert derivative (Leibniz's notation).",
-    defaultName: "dd",
+    defaultName: "dv",
     defaultSelect: true,
     definition: "@derivative;${1:y};${2:x}@"
   },
   "sNDerivative": {
     title: "Insert high-order derivative (Leibniz)",
     description: "Insert high-order derivative (Leibniz's notation).",
-    defaultName: "ddn",
+    defaultName: "dvn",
     defaultSelect: true,
     definition: "@nDerivative;${1:2};${2:y};${3:x}@"
   },

@@ -75,6 +75,10 @@ const PREFS = {
     value: "\\frac{d^{@1@}@2@}{d@3@^{@1@}}",
     type: "command"
   },
+  "differential": {
+    value: "\\,d@1@",
+    type: "command"
+  }
 };
 
 function getPrefs() {

@@ -24,6 +24,7 @@ const PACKAGES = {
       "norm": "\\norm{@}",
       "derivative": "\\dv{@1@}{@2@}",
       "nDerivative": "\\dv[@1@]{@2@}{@3@}",
+      "differential": "\\dd{@1@}",
     },
     definition: "\\usepackage{physics}"
   },
@@ -38,6 +39,7 @@ const PACKAGES = {
     prefReplacements: {
       "derivative": "\\odv{@1@}{@2@}",
       "nDerivative": "\\odv[@1@]{@2@}{@3@}",
+      "differential": "\\odif{@1@}",
     },
     definition: "\\usepackage{derivative}"
   }

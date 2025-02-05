@@ -90,4 +90,25 @@ const SNIPPETS = {
     defaultSelect: true,
     definition: "@nDerivative;${1:2};${2:y};${3:x}@"
   },
+  "sDifferential": {
+    title: "Insert differential",
+    description: `Inserts a differential (i.e., "dx" or "dy).`,
+    defaultName: "dd",
+    defaultSelect: true,
+    definition: "@differential;${1:x}@"
+  },
+  "sIntegral": {
+    title: "Insert indefinite integral",
+    description: `Inserts an indefinite integral.`,
+    defaultName: "int",
+    defaultSelect: true,
+    definition: "\\int ${1} @differential;${2:x}@"
+  },
+  "sDefiniteIntegral": {
+    title: "Insert definite integral",
+    description: `Inserts a definite integral.`,
+    defaultName: "dint",
+    defaultSelect: true,
+    definition: "\\int_{${1:-\\infty}}^{${2:\\infty}} ${3} @differential;${4:x}@"
+  },
 };

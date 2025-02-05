@@ -62,6 +62,13 @@ const SNIPPETS = {
     defaultSelect: true,
     definition: "@norm;$1@"
   },
+  "sFrac": {
+    title: `Insert fraction`,
+    description: `Inserts a fraction (the "frac" command).`,
+    defaultName: "@/",
+    defaultSelect: true,
+    definition: "\\frac{${1:1}}{$2}"
+  },
   "sGather": {
     title: `Insert a "gather*" environment`,
     description: `Inserts a "gather*" environment.`,

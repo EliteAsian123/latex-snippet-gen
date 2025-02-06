@@ -69,6 +69,20 @@ const SNIPPETS = {
     defaultSelect: true,
     definition: "\\frac{${1:1}}{$2}"
   },
+  "sExponent": {
+    title: `Insert exponent`,
+    description: `Inserts an exponent (including curly braces for grouping).`,
+    defaultName: "@^",
+    defaultSelect: true,
+    definition: "^{$1}",
+  },
+  "sFracExponent": {
+    title: `Insert fraction as exponent`,
+    description: `Inserts a fraction (the "frac" command) as an exponent.`,
+    defaultName: "@^/",
+    defaultSelect: true,
+    definition: "^{\\frac{${1:1}}{$2}}"
+  },
   "sGather": {
     title: `Insert a "gather*" environment`,
     description: `Inserts a "gather*" environment.`,
@@ -82,6 +96,27 @@ const SNIPPETS = {
     defaultName: "align",
     defaultSelect: true,
     definition: "\\begin{align*}\n\t$1\n\\end{align*}"
+  },
+  "sSqrt": {
+    title: "Insert square root",
+    description: `Inserts a square root.`,
+    defaultName: "sqrt",
+    defaultSelect: true,
+    definition: "\\sqrt{$1}"
+  },
+  "sCbrt": {
+    title: "Insert cube root",
+    description: `Inserts a cube root.`,
+    defaultName: "cbrt",
+    defaultSelect: true,
+    definition: "\\sqrt[3]{$1}"
+  },
+  "sRoot": {
+    title: "Insert nth root",
+    description: `Inserts a root with a customizable index.`,
+    defaultName: "rt",
+    defaultSelect: true,
+    definition: "\\sqrt[$1]{$2}"
   },
   "sDerivative": {
     title: "Insert derivative (Leibniz)",
